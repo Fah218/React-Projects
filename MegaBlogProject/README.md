@@ -79,3 +79,16 @@ Step 7:
 Learn authentication service with appwrite:
 
 Adjust new file auth.js -  Add all the code for signup,login,logout,useraccount (even use in future)
+
+
+
+Step 8:
+
+create file config.js
+
+Added all post related and file related srvices in config.js
+
+-Post services: create ,delete,update,get post 
+-File services:  upload,delete,Getfile Preview
+
+-All these services presence after reading documentation present at appwrite with code (try & catch method use)
