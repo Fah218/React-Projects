@@ -70,3 +70,12 @@ Set Conf.js file in src :
 }
 
 export default conf
+
+
+
+
+Step 7:
+
+Learn authentication service with appwrite:
+
+Adjust new file auth.js -  Add all the code for signup,login,logout,useraccount (even use in future)
