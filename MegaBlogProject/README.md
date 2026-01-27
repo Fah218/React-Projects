@@ -92,3 +92,13 @@ Added all post related and file related srvices in config.js
 -File services:  upload,delete,Getfile Preview
 
 -All these services presence after reading documentation present at appwrite with code (try & catch method use)
+
+
+
+
+Step 9:
+
+Set up redux toolkit:
+-Create store.js & authSlice.js and sstore.js 
+-Create components Header & Footer
+-Set up Tailwind 
