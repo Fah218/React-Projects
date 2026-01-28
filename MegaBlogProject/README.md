@@ -102,3 +102,10 @@ Set up redux toolkit:
 -Create store.js & authSlice.js and sstore.js 
 -Create components Header & Footer
 -Set up Tailwind 
+
+
+Step 10:
+
+
+-create files :  container
+-Create Input.jsx , Logo.jsx , Button.jsx & LogoutBTn.jsx 
