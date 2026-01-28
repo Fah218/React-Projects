@@ -109,3 +109,11 @@ Step 10:
 
 -create files :  container
 -Create Input.jsx , Logo.jsx , Button.jsx & LogoutBTn.jsx 
+
+
+Step 11:
+
+
+-Set up React hook form code in Login and Sign up page
+
+-Created Login,PostCard,Select,Signup,AuthLayout files
