@@ -10,19 +10,19 @@ function App() {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-  setTimeout(() => {
-    authService.getCurrentUser()
-      .then(userData => {
-        if (userData) {
-          dispatch(login({ userData }))
-        } else {
-          dispatch(authChecked())
-        }
-      })
-      .catch(() => dispatch(authChecked()))
-  }, 300)
+ useEffect(() => {
+  authService.getCurrentUser()
+    .then(userData => {
+      if (userData) {
+        dispatch(login({ userData }))
+      } else {
+        dispatch(authChecked())
+      }
+    })
+    .catch(() => dispatch(authChecked()))
 }, [dispatch])
+
+
 
 
   return (

@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { createSlice } from "@reduxjs/toolkit";
 
-export default function Protected({ children, authentication = true }) {
-
-  const navigate = useNavigate()
-  const [loader, setLoader] = useState(true)
-
-  const authStatus = useSelector(state => state.auth.status)
-  const authLoaded = useSelector(state => state.auth.loaded) // 👈 important
-
-  useEffect(() => {
-
-    if (!authLoaded) return   // wait until session check finishes
-
-    if (authentication && !authStatus) {
-      navigate("/login")
-    } 
-    else if (!authentication && authStatus) {
-      navigate("/")
-    }
-
-    setLoader(false)
-
-  }, [authStatus, authLoaded, authentication, navigate])
-
-  if (!authLoaded || loader) return <h1>Loading...</h1>
-
-  return <>{children}</>
+const initialState = {
+  status: false,
+  userData: null,
+  loaded: false
 }
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    login: (state, action) => {
+      state.status = true
+      state.userData = action.payload.userData
+      state.loaded = true
+    },
+    logout: (state) => {
+      state.status = false
+      state.userData = null
+      state.loaded = true
+    },
+    authChecked: (state) => {
+      state.loaded = true
+    }
+  }
+})
+
+export const { login, logout, authChecked } = authSlice.actions
+export default authSlice.reducer
