@@ -19,7 +19,12 @@ export default function PostForm({ post }) {
     const userData = useSelector((state) => state.auth.userData);
 
     const submit = async (data) => {
+        console.log("Form submitted with data:", data);
+        console.log("Current userData:", userData);
+
         if (post) {
+            // Updating existing post
+            console.log("Updating existing post:", post.$id);
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
             if (file) {
@@ -28,23 +33,41 @@ export default function PostForm({ post }) {
 
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
-                featuredImage: file ? file.$id : undefined,
+                featuredImage: file ? file.$id : post.featuredImage,
             });
 
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
+            // Creating new post
+            console.log("Creating new post...");
+
+            if (!userData || !userData.$id) {
+                console.error("User data not available!");
+                alert("Error: User not logged in. Please refresh and try again.");
+                return;
+            }
+
             const file = await appwriteService.uploadFile(data.image[0]);
+            console.log("File uploaded:", file);
 
             if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
+                console.log("Creating post with userId:", userData.$id);
                 const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                console.log("Post created:", dbPost);
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
+                } else {
+                    console.error("Failed to create post");
+                    alert("Failed to create post. Check console for errors.");
                 }
+            } else {
+                console.error("Failed to upload file");
+                alert("Failed to upload image. Please try again.");
             }
         }
     };
@@ -74,13 +97,13 @@ export default function PostForm({ post }) {
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
                 <Input
-                    label="Title :"
+                    label="Title"
                     placeholder="Title"
                     className="mb-4"
                     {...register("title", { required: true })}
                 />
                 <Input
-                    label="Slug :"
+                    label="Slug"
                     placeholder="Slug"
                     className="mb-4"
                     {...register("slug", { required: true })}
@@ -88,11 +111,11 @@ export default function PostForm({ post }) {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE label="Content" name="content" control={control} defaultValue={getValues("content")} />
             </div>
             <div className="w-1/3 px-2">
                 <Input
-                    label="Featured Image :"
+                    label="Featured Image"
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
