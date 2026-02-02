@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import './App.css'
 import authService from "./appwrite/auth"
-import { login, logout } from "./store/authSlice"
+import { login, logout, authChecked } from "./store/authSlice"
 import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom'
 
 function App() {
-  const [loading, setLoading] = useState(true)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
+  setTimeout(() => {
     authService.getCurrentUser()
-      .then((userData) => {
+      .then(userData => {
         if (userData) {
           dispatch(login({ userData }))
         } else {
-          dispatch(logout())
+          dispatch(authChecked())
         }
       })
-      .finally(() => setLoading(false))
-  }, [])
+      .catch(() => dispatch(authChecked()))
+  }, 300)
+}, [dispatch])
 
-  return !loading ? (
+
+  return (
     <div className='min-h-screen flex flex-wrap content-between bg-gradient-to-br from-black via-gray-900 to-black'>
       <div className='w-full block'>
         <Header />
@@ -32,7 +35,7 @@ function App() {
         <Footer />
       </div>
     </div>
-  ) : null
+  )
 }
 
 export default App

@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    status : false,
-    userData: null
+    status: false,
+    userData: null,
+    loaded: false   // 👈 tells app auth check finished
 }
 
 const authSlice = createSlice({
@@ -10,16 +11,21 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            state.status = true;
-            state.userData = action.payload.userData;
+            state.status = true
+            state.userData = action.payload.userData
+            state.loaded = true
         },
         logout: (state) => {
-            state.status = false;
-            state.userData = null;
+            state.status = false
+            state.userData = null
+            state.loaded = true
+        },
+        authChecked: (state) => {   // when no session exists
+            state.loaded = true
         }
-     }
+    }
 })
 
-export const {login, logout} = authSlice.actions;
+export const { login, logout, authChecked } = authSlice.actions
 
-export default authSlice.reducer;
+export default authSlice.reducer
