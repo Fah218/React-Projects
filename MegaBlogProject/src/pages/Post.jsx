@@ -57,7 +57,7 @@ export default function Post() {
     };
 
     return post ? (
-        <div className="py-8 min-h-screen">
+        <div className="py-12 min-h-screen w-full flex justify-center">
             <Container>
                 <div className="max-w-4xl mx-auto glass-card overflow-hidden">
                     <div className="relative">

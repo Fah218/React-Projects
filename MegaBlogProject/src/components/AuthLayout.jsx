@@ -1,30 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-const initialState = {
-  status: false,
-  userData: null,
-  loaded: false
-}
+export default function Protected({ children, authentication = true }) {
 
-const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    login: (state, action) => {
-      state.status = true
-      state.userData = action.payload.userData
-      state.loaded = true
-    },
-    logout: (state) => {
-      state.status = false
-      state.userData = null
-      state.loaded = true
-    },
-    authChecked: (state) => {
-      state.loaded = true
+  const navigate = useNavigate()
+  const [loader, setLoader] = useState(true)
+  const authStatus = useSelector(state => state.auth.status)
+
+  useEffect(() => {
+    //TODO: make it more easy to understand
+
+    // if (authStatus ===true){
+    //     navigate("/")
+    // } else if (authStatus === false) {
+    //     navigate("/login")
+    // }
+
+    // let authValue = authStatus === true ? true : false
+
+    if (authentication && authStatus !== authentication) {
+      navigate("/login")
+    } else if (!authentication && authStatus !== authentication) {
+      navigate("/")
     }
-  }
-})
+    setLoader(false)
+  }, [authStatus, navigate, authentication])
 
-export const { login, logout, authChecked } = authSlice.actions
-export default authSlice.reducer
+  return loader ? <h1>Loading...</h1> : <>{children}</>
+}
