@@ -1,10 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getWeatherByCity } from "./weather/weatherThunks";
+import { getWeatherByCity, getWeatherByCoords } from "./weather/weatherThunks";
+
+const loadFavorites = () => {
+  try {
+    const favorites = localStorage.getItem("favorites");
+    return favorites ? JSON.parse(favorites) : [];
+  } catch (e) {
+    console.error("Failed to parse favorites from local storage", e);
+    return [];
+  }
+};
 
 const initialState = {
   current: null,
   forecast: [],
-  favorites: JSON.parse(localStorage.getItem("favorites")) || [],
+  favorites: loadFavorites(),
   units: "metric",
   loading: false,
   error: null,
@@ -39,6 +49,19 @@ const weatherSlice = createSlice({
         state.forecast = action.payload.forecast.list;
       })
       .addCase(getWeatherByCity.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getWeatherByCoords.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getWeatherByCoords.fulfilled, (state, action) => {
+        state.loading = false;
+        state.current = action.payload.current;
+        state.forecast = action.payload.forecast.list;
+      })
+      .addCase(getWeatherByCoords.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

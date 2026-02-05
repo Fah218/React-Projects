@@ -17,4 +17,9 @@ export const fetchByCoords = (lat, lon, units) =>
   axios.get(`${BASE_URL}/weather`, {
     params: { lat, lon, units, appid: API_KEY },
   });
-  
+
+export const fetchForecastByCoords = (lat, lon, units) =>
+  axios.get(`${BASE_URL}/forecast`, {
+    params: { lat, lon, units, appid: API_KEY },
+  });
+
