@@ -15,11 +15,15 @@ function Signup() {
     const create = async (data) => {
         setError("")
         try {
-            const userData = await authService.createAccount(data)
-            if (userData) {
+            const session = await authService.createAccount(data)
+            if (session) {
                 const userData = await authService.getCurrentUser()
-                if (userData) dispatch(login({ userData }));
-                navigate("/")
+                if (userData) {
+                    dispatch(login({ userData }));
+                    navigate("/")
+                } else {
+                    setError("Failed to fetch user data. Please try again.")
+                }
             }
         } catch (error) {
             setError(error.message)

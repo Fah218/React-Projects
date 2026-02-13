@@ -64,21 +64,20 @@ export default function ForecastBars() {
 
     // Get color based on temperature
     const getTempColor = (temp) => {
-        if (temp >= 30) return "from-red-500 to-orange-500";
-        if (temp >= 20) return "from-orange-400 to-yellow-400";
-        if (temp >= 10) return "from-yellow-400 to-green-400";
-        if (temp >= 0) return "from-green-400 to-blue-400";
-        return "from-blue-400 to-indigo-500";
+        if (temp >= 30) return "bg-orange-500";
+        if (temp >= 20) return "bg-yellow-400";
+        if (temp >= 10) return "bg-green-400";
+        if (temp >= 0) return "bg-blue-400";
+        return "bg-indigo-500";
     };
 
     return (
-        <div className="bg-slate-800/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-xl">
-            <h3 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-                <span className="w-1 h-8 bg-gradient-to-b from-blue-400 to-purple-500 rounded-full"></span>
+        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 h-full flex flex-col justify-between shadow-md border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+            <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white flex items-center gap-2">
                 7-Day Forecast
             </h3>
 
-            <div className="flex items-end justify-between gap-3 md:gap-4 h-64 md:h-80">
+            <div className="flex items-end justify-between gap-2 h-40 md:h-48 lg:h-56">
                 {dailyForecast.map((item, index) => {
                     const temp = Math.round(item.main.temp);
                     const height = getBarHeight(item.main.temp);
@@ -92,7 +91,7 @@ export default function ForecastBars() {
                         >
                             {/* Temperature Label */}
                             <div className="mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <span className="text-white font-bold text-sm md:text-base bg-slate-700/80 px-2 py-1 rounded-lg">
+                                <span className="text-slate-700 dark:text-white font-bold text-sm md:text-base bg-white/80 dark:bg-slate-700/80 px-2 py-1 rounded-lg shadow-sm backdrop-blur-sm">
                                     {temp}{tempUnit}
                                 </span>
                             </div>
@@ -108,15 +107,13 @@ export default function ForecastBars() {
 
                             {/* Animated Bar */}
                             <div
-                                className={`w-full bg-gradient-to-t ${getTempColor(
+                                className={`w-full ${getTempColor(
                                     item.main.temp
-                                )} rounded-t-xl relative overflow-hidden transition-all duration-700 ease-out shadow-lg hover:shadow-2xl`}
+                                )} rounded-t-lg relative overflow-hidden transition-all duration-500 ease-out`}
                                 style={{
                                     height: animatedHeights[index] ? `${height}%` : "0%",
                                 }}
                             >
-                                {/* Shimmer Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-transparent transform -skew-y-12 group-hover:translate-y-full transition-transform duration-1000"></div>
 
                                 {/* Temperature Display on Bar */}
                                 <div className="absolute inset-0 flex items-center justify-center">
@@ -128,11 +125,11 @@ export default function ForecastBars() {
 
                             {/* Day Label */}
                             <div className="mt-3 text-center">
-                                <p className={`text-xs md:text-sm font-semibold ${isToday ? "text-blue-400" : "text-slate-300"
+                                <p className={`text-xs md:text-sm font-semibold ${isToday ? "text-blue-500 dark:text-blue-400" : "text-slate-600 dark:text-slate-300"
                                     }`}>
                                     {isToday ? "Today" : date.toLocaleDateString("en-US", { weekday: "short" })}
                                 </p>
-                                <p className="text-xs text-slate-500 mt-1">
+                                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-medium">
                                     {date.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                                 </p>
                             </div>
@@ -142,7 +139,7 @@ export default function ForecastBars() {
             </div>
 
             {/* Legend */}
-            <div className="mt-6 pt-4 border-t border-slate-700/50 flex justify-center gap-6 text-xs text-slate-400">
+            <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700/50 flex justify-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded bg-gradient-to-r from-red-500 to-orange-500"></div>
                     <span>Hot</span>

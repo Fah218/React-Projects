@@ -10,30 +10,28 @@ function App() {
 
   const dispatch = useDispatch()
 
- useEffect(() => {
-  authService.getCurrentUser()
-    .then(userData => {
-      if (userData) {
-        dispatch(login({ userData }))
-      } else {
-        dispatch(authChecked())
-      }
-    })
-    .catch(() => dispatch(authChecked()))
-}, [dispatch])
+  useEffect(() => {
+    authService.getCurrentUser()
+      .then(userData => {
+        if (userData) {
+          dispatch(login({ userData }))
+        } else {
+          dispatch(authChecked())
+        }
+      })
+      .catch(() => dispatch(authChecked()))
+  }, [dispatch])
 
 
 
 
   return (
-    <div className='min-h-screen flex flex-wrap content-between bg-gradient-to-br from-black via-gray-900 to-black'>
-      <div className='w-full block'>
-        <Header />
-        <main className='animate-fadeIn'>
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
+    <div className='min-h-screen flex flex-col bg-gradient-to-br from-black via-gray-900 to-black'>
+      <Header />
+      <main className='flex-1 animate-fadeIn'>
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   )
 }

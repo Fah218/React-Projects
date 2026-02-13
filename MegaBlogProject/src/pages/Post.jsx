@@ -57,38 +57,60 @@ export default function Post() {
     };
 
     return post ? (
-        <div className="py-12 min-h-screen w-full flex justify-center">
+        <div className="py-16 bg-black min-h-screen">
             <Container>
-                <div className="max-w-4xl mx-auto glass-card overflow-hidden">
-                    <div className="relative">
+                <div className="max-w-3xl mx-auto">
+
+                    {/* Featured Image */}
+                    <div className="rounded-2xl overflow-hidden shadow-xl mb-8">
                         <img
                             src={appwriteService.getFilePreview(post.featuredImage)}
                             alt={post.title}
-                            className="w-full h-96 object-cover"
+                            className="w-full max-h-[420px] object-cover"
                         />
+                    </div>
+
+                    {/* Title + Actions */}
+                    <div className="flex items-start justify-between mb-6">
+                        <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                            {post.title}
+                        </h1>
 
                         {isAuthor && (
-                            <div className="absolute right-6 top-6 flex gap-4">
+                            <div className="flex gap-3">
                                 <Link to={`/edit-post/${post.$id}`}>
-                                    <button className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-green-600/50 transition-all duration-300 hover:scale-105">
-                                        Edit
-                                    </button>
+                                    <button
+  className="w-32 h-10 flex items-center justify-center 
+             bg-green-600 hover:bg-green-700 
+             text-white text-sm 
+             rounded-lg transition"
+>
+  Edit
+</button>
+
                                 </Link>
+
                                 <button
                                     onClick={deletePost}
-                                    className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-red-600/50 transition-all duration-300 hover:scale-105"
+                                    className="w-32 h-10 flex items-center justify-center 
+           bg-red-600 hover:bg-red-700 
+           text-white text-sm 
+           rounded-lg transition"
+
                                 >
                                     Delete
                                 </button>
                             </div>
                         )}
                     </div>
-                    <div className="p-8">
-                        <h1 className="text-4xl font-bold text-white mb-6">{post.title}</h1>
-                        <div className="prose prose-invert prose-red max-w-none text-gray-300">
+
+                    {/* Content */}
+                    <div className="bg-zinc-900 p-8 rounded-2xl shadow-lg">
+                        <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed">
                             {parse(post.content)}
                         </div>
                     </div>
+
                 </div>
             </Container>
         </div>

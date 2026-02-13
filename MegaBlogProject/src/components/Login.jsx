@@ -15,14 +15,30 @@ function Login() {
     const login = async (data) => {
         setError("")
         try {
+            console.log("Login: Attempting login...");
             const session = await authService.login(data)
             if (session) {
+                console.log("Login: Session created, fetching user...");
                 const userData = await authService.getCurrentUser()
-                if (userData) dispatch(authLogin({ userData }))
-                    ;
-                navigate("/")
+
+                if (userData) {
+                    console.log("Login: User found, dispatching...");
+                    dispatch(authLogin({ userData }))
+                    navigate("/")
+                } else {
+                    // Fallback: If getCurrentUser fails (due to cookie blocking), use session data
+                    console.warn("Login: User data fetch failed, using session fallback");
+                    const fallbackUser = {
+                        $id: session.userId,
+                        email: data.email,
+                        name: "User" // We don't have name in session, but this unblocks the app
+                    };
+                    dispatch(authLogin({ userData: fallbackUser }))
+                    navigate("/")
+                }
             }
         } catch (error) {
+            console.error("Login: Error caught", error);
             setError(error.message)
         }
     }

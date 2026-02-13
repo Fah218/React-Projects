@@ -9,15 +9,15 @@ export default function UnitToggle() {
   return (
     <button
       onClick={() => dispatch(toggleUnits())}
-      className="relative flex items-center gap-2 px-5 py-2.5 bg-slate-700/80 backdrop-blur-sm rounded-full font-semibold text-white hover:bg-slate-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+      className="flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all duration-300 cursor-pointer shadow-sm border bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 text-slate-700 dark:text-white"
       aria-label={`Switch to ${isMetric ? "Fahrenheit" : "Celsius"}`}
     >
       <div className="flex items-center gap-1">
-        <span className={`transition-all duration-300 ${isMetric ? "text-white scale-110" : "text-slate-400 scale-90"}`}>
+        <span className={`transition-all duration-300 ${isMetric ? "text-blue-600 dark:text-white scale-110 font-bold" : "text-slate-400 scale-90"}`}>
           °C
         </span>
-        <span className="text-slate-500">/</span>
-        <span className={`transition-all duration-300 ${!isMetric ? "text-white scale-110" : "text-slate-400 scale-90"}`}>
+        <span className="text-slate-300 dark:text-slate-500">/</span>
+        <span className={`transition-all duration-300 ${!isMetric ? "text-blue-600 dark:text-white scale-110 font-bold" : "text-slate-400 scale-90"}`}>
           °F
         </span>
       </div>

@@ -3,6 +3,7 @@ import { Container, PostCard } from '../components'
 import appwriteService from "../appwrite/config";
 import { useSelector } from 'react-redux';
 import { Query } from 'appwrite';
+import { Link } from 'react-router-dom';
 
 function AllPosts() {
     const [posts, setPosts] = useState([])
@@ -34,12 +35,12 @@ function AllPosts() {
                             <p className="text-gray-400 text-lg mb-6">
                                 You haven't created any posts. Click "Add Post" to create your first post!
                             </p>
-                            <a
-                                href="/add-post"
+                            <Link
+                                to="/add-post"
                                 className="inline-block px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-red-600/50 transition-all duration-300 hover:scale-105"
                             >
                                 Create Your First Post
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 ) : (

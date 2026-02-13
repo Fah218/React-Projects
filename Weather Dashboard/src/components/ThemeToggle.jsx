@@ -23,9 +23,9 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setDark(!dark)}
-      className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl ${dark
-          ? "bg-slate-700 text-white hover:bg-slate-600"
-          : "bg-white text-slate-900 hover:bg-slate-100"
+      className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-300 cursor-pointer shadow-sm border ${dark
+        ? "bg-slate-700 text-white border-slate-600 hover:bg-slate-600"
+        : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
         }`}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
     >

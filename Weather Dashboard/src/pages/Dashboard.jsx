@@ -31,46 +31,47 @@ export default function Dashboard() {
   }, [dispatch, units]);
 
   return (
-    <div className="min-h-screen p-4 md:p-8 space-y-8 max-w-7xl mx-auto">
+    <div className="min-h-screen p-4 md:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
-        <div>
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
-            Weather Dashboard
+      <div className="flex flex-col md:flex-row justify-between gap-4 items-center bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm mb-6 border border-slate-200 dark:border-slate-700 transition-colors duration-300 top-0 z-50">
+        <div className="flex-shrink-0">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+            Weather<span className="font-light text-slate-500">Dash</span>
           </h1>
-          <p className="text-slate-400 text-sm md:text-base">
-            Real-time weather updates and 7-day forecast
-          </p>
         </div>
-        <div className="flex gap-3 items-center">
+
+        {/* Center Search Bar */}
+        <div className="w-full max-w-lg mx-auto">
+          <SearchBar />
+        </div>
+
+        <div className="flex gap-3 items-center flex-shrink-0">
           <ThemeToggle />
           <UnitToggle />
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="w-full">
-        <SearchBar />
-      </div>
-
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-        {/* Hero Weather Card */}
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Column: Hero Card (7 cols) */}
+        <div className="lg:col-span-8 flex flex-col gap-6">
           <HeroWeatherCard />
+          {/* Move Forecast Bars here for compact view? No, let's keep it below but styled better */}
+          <div className="hidden lg:block">
+            <ForecastBars />
+          </div>
         </div>
 
-        {/* Weather Details Panel */}
-        <div className="lg:col-span-1">
+        {/* Right Column: Details + Mobile Forecast (5 cols) */}
+        <div className="lg:col-span-4 flex flex-col gap-6 h-full">
           <WeatherDetailsPanel />
+          <div className="lg:hidden">
+            <ForecastBars />
+          </div>
         </div>
-      </div>
-
-      {/* 7-Day Forecast Bars */}
-      <div className="w-full">
-        <ForecastBars />
       </div>
     </div>
   );
 }
+
 
