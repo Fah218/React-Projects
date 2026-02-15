@@ -1,12 +1,22 @@
-import { Link, useLocation } from 'react-router-dom';
-import { FiHome, FiPlus, FiCalendar, FiBook } from 'react-icons/fi';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../features/auth/authSlice';
+import { FiHome, FiPlus, FiCalendar, FiBook, FiLogOut, FiLogIn, FiUserPlus } from 'react-icons/fi';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate('/');
+  };
 
   const isActive = (path) => {
-    if (path === '/' && location.pathname === '/') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
+    if (path === location.pathname) return true;
     return false;
   };
 
@@ -38,17 +48,46 @@ const Navbar = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                    isActive(link.path)
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${isActive(link.path)
                       ? 'bg-orange-600 text-white shadow-md'
                       : 'text-gray-700 hover:bg-gray-100'
-                  }`}
+                    }`}
                 >
                   <Icon size={20} />
                   <span className="hidden md:inline">{link.label}</span>
                 </Link>
               );
             })}
+
+            {user ? (
+              <button
+                onClick={onLogout}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100 transition-all ml-2"
+              >
+                <FiLogOut size={20} />
+                <span className="hidden md:inline">Logout</span>
+              </button>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ml-2 ${isActive('/login') ? 'bg-orange-600 text-white shadow-md' : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                >
+                  <FiLogIn size={20} />
+                  <span className="hidden md:inline">Login</span>
+                </Link>
+                <Link
+                  to="/register"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${isActive('/register') ? 'bg-orange-600 text-white shadow-md' : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                >
+                  <FiUserPlus size={20} />
+                  <span className="hidden md:inline">Register</span>
+                </Link>
+              </>
+            )}
+
           </div>
         </div>
       </div>
