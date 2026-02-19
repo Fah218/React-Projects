@@ -1,3 +1,5 @@
+DEPLOYMENT LINK : https://mega-blog-tau-ebon.vercel.app/
+
 📌 Step 1: Install Required Dependencies
 npm install react-redux react-router-dom @reduxjs/toolkit appwrite @tinymce/tinymce-react html-react-parser react-hook-form
 
