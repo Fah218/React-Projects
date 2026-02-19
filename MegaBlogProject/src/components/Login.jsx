@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { login as authLogin } from '../store/authSlice'
 import Input from "./Input"
 import { useDispatch } from "react-redux"
@@ -8,9 +8,17 @@ import { useForm } from "react-hook-form"
 
 function Login() {
     const navigate = useNavigate()
+    const location = useLocation()
     const dispatch = useDispatch()
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, setValue } = useForm()
     const [error, setError] = useState("")
+
+    useEffect(() => {
+        if (location.state) {
+            if (location.state.email) setValue("email", location.state.email)
+            if (location.state.password) setValue("password", location.state.password)
+        }
+    }, [location.state, setValue])
 
     const login = async (data) => {
         setError("")
@@ -73,6 +81,7 @@ function Login() {
                             label="Email Address"
                             placeholder="john@example.com"
                             type="email"
+                            autoComplete="username"
                             {...register("email", {
                                 required: true,
                                 validate: {
@@ -85,6 +94,7 @@ function Login() {
                             label="Password"
                             type="password"
                             placeholder="Enter your password"
+                            autoComplete="current-password"
                             {...register("password", {
                                 required: true,
                             })}

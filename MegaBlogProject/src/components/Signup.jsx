@@ -15,15 +15,14 @@ function Signup() {
     const create = async (data) => {
         setError("")
         try {
-            const session = await authService.createAccount(data)
-            if (session) {
-                const userData = await authService.getCurrentUser()
-                if (userData) {
-                    dispatch(login({ userData }));
-                    navigate("/")
-                } else {
-                    setError("Failed to fetch user data. Please try again.")
-                }
+            const userData = await authService.createAccount(data)
+            if (userData) {
+                navigate("/login", {
+                    state: {
+                        email: data.email,
+                        password: data.password
+                    }
+                })
             }
         } catch (error) {
             setError(error.message)
@@ -31,10 +30,10 @@ function Signup() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-[85vh] py-12 px-4">
-            <div className="mx-auto w-full max-w-md">
+        <div className="flex items-center justify-center min-h-[85vh] py-16 px-4">
+            <div className="mx-auto w-full max-w-lg">
                 {/* Header Section */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-10">
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent mb-3">
                         Join BlogSpace
                     </h1>
@@ -44,8 +43,8 @@ function Signup() {
                 </div>
 
                 {/* Form Card */}
-                <div className="glass-card p-8">
-                    <h2 className="text-2xl font-bold text-white mb-6 text-center">
+                <div className="glass-card p-10">
+                    <h2 className="text-2xl font-bold text-white mb-8 text-center">
                         Sign Up
                     </h2>
 
@@ -55,10 +54,11 @@ function Signup() {
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit(create)} className="space-y-5">
+                    <form onSubmit={handleSubmit(create)} className="space-y-6">
                         <Input
                             label="Full Name"
                             placeholder="John Doe"
+                            autoComplete="name"
                             {...register("name", {
                                 required: true,
                             })}
@@ -67,6 +67,7 @@ function Signup() {
                             label="Email Address"
                             placeholder="john@example.com"
                             type="email"
+                            autoComplete="username"
                             {...register("email", {
                                 required: true,
                                 validate: {
@@ -79,6 +80,7 @@ function Signup() {
                             label="Password"
                             type="password"
                             placeholder="Enter a strong password"
+                            autoComplete="new-password"
                             {...register("password", {
                                 required: true,
                             })}
@@ -86,14 +88,14 @@ function Signup() {
 
                         <button
                             type="submit"
-                            className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-red-600/50 transition-all duration-300 hover:scale-[1.02]"
+                            className="w-full mt-8 px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-red-600/50 transition-all duration-300 hover:scale-[1.02]"
                         >
                             Create Account
                         </button>
                     </form>
 
                     {/* Sign In Link */}
-                    <div className="mt-6 text-center">
+                    <div className="mt-8 text-center">
                         <p className="text-gray-400 text-sm">
                             Already have an account?{' '}
                             <Link
