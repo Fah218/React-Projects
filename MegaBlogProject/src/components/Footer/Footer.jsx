@@ -12,7 +12,7 @@ function Footer() {
                         </p>
                     </div>
                     <div>
-                        <ul className="flex space-x-6 items-center">
+                        {/* <ul className="flex space-x-6 items-center">
                             <li>
                                 <a
                                     href="https://github.com/Fah218/React-Projects/tree/main/MegaBlogProject" // Replace with actual URL
@@ -37,7 +37,7 @@ function Footer() {
                                     </svg>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> */}
                     </div>
                 </div>
             </div>

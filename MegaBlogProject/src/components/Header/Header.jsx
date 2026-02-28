@@ -37,27 +37,27 @@ function Header() {
   ]
 
   return (
-    <header className='py-3 shadow-lg bg-black/80 backdrop-blur-md border-b border-red-900/30 sticky top-0 z-50'>
+    <header className='h-[72px] flex items-center shadow-lg bg-black/80 backdrop-blur-md border-b border-red-900/30 sticky top-0 z-50 transition-all'>
       <Container>
-        <nav className='flex items-center justify-between'>
+        <nav className='flex items-center justify-between w-full'>
           {/* Brand Section - Left Side */}
           <div className='flex items-center'>
             <Link to='/' className='flex items-center group'>
-              <span className='text-2xl font-bold bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent'>
+              <span className='text-3xl font-extrabold bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent transform transition-transform hover:scale-105 duration-300'>
                 BlogSpace
               </span>
             </Link>
           </div>
 
-          {/* Navigation Items - Top Right */}
-          <div className='flex items-center'>
-            <ul className='flex items-center gap-3'>
+          {/* Navigation Items - Pin to the far Right */}
+          <div className='flex items-center ml-auto'>
+            <ul className='flex items-center gap-2 md:gap-4'>
               {navItems.map((item) =>
                 item.active ? (
                   <li key={item.name}>
                     <button
                       onClick={() => navigate(item.slug)}
-                      className='px-4 py-2 text-sm duration-300 hover:bg-red-600 bg-gray-800/50 hover:shadow-lg hover:shadow-red-600/30 rounded-lg text-white font-medium transition-all hover:scale-105 border border-gray-700 hover:border-red-600 whitespace-nowrap'
+                      className='px-3 md:px-5 py-2 md:py-2.5 text-sm md:text-base duration-300 hover:bg-red-600 bg-gray-800/70 hover:shadow-[0_0_15px_rgba(220,38,38,0.5)] rounded-xl text-white font-semibold transition-all hover:-translate-y-1 hover:scale-105 border border-gray-700/50 hover:border-red-500 whitespace-nowrap'
                     >{item.name}</button>
                   </li>
                 ) : null
